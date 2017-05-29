@@ -4,7 +4,12 @@ import { shell, BrowserWindow } from "electron";
 
 let launchIpynb;
 
+const URL = require("url");
+
 export function getPath(url) {
+  if (url.startsWith("file:///")) {
+    return URL.parse(url).pathname;
+  }
   const nUrl = url.substring(url.indexOf("static"), path.length);
   return path.join(__dirname, "..", "..", nUrl.replace("static/", ""));
 }
