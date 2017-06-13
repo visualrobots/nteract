@@ -14,6 +14,8 @@ export function deferURL(event, url) {
   if (!url.startsWith("file:")) {
     shell.openExternal(url);
   } else if (url.endsWith(".ipynb")) {
+    // TODO: Determine if `file://` already set up as if the user
+    //       has clicked a notebook link within another notebook
     launchIpynb(getPath(url));
   }
 }
