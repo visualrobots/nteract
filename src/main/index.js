@@ -1,4 +1,11 @@
-import { Menu, dialog, app, ipcMain as ipc, BrowserWindow } from "electron";
+import {
+  Menu,
+  dialog,
+  app,
+  ipcMain as ipc,
+  BrowserWindow,
+  protocol
+} from "electron";
 import { resolve, join } from "path";
 import { existsSync } from "fs";
 
@@ -13,6 +20,8 @@ import {
 import { launch, launchNewNotebook } from "./launch";
 
 import { loadFullMenu } from "./menu";
+
+import { registerProtocol } from "./protocol";
 
 import prepareEnv from "./prepare-env";
 import initializeKernelSpecs from "./kernel-specs";
@@ -55,6 +64,9 @@ const electronReady$ = Rx.Observable.fromEvent(app, "ready");
 
 // TODO: Register our protocol here, rendering index.html accordingly
 // See https://github.com/nteract/nteract/pull/1720
+electronReady$.subscribe(() => {
+  registerProtocol();
+});
 
 const fullAppReady$ = Rx.Observable.zip(electronReady$, prepareEnv).first();
 

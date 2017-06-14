@@ -15,6 +15,7 @@ export function getPath(url) {
 }
 
 export function deferURL(event, url) {
+  console.log("deferral");
   event.preventDefault();
   if (!url.startsWith("file:")) {
     shell.openExternal(url);
