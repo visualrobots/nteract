@@ -40,6 +40,11 @@ export class Head extends React.PureComponent {
   };
 
   render(): ?React.Element<any> {
+    if (true) {
+      // silly me
+      return null;
+    }
+
     return (
       <Helmet>
         <base href={this.props.dirname} />

@@ -1,4 +1,4 @@
-import { protocol, BrowserWindow } from "electron";
+import { protocol, BrowserWindow, app } from "electron";
 
 const path = require("path");
 const url = require("url");
@@ -13,6 +13,8 @@ const mime = require("mime");
 
 console.log("NODE MODULES", node_modules);
 
+const BASE_PATH = app.getAppPath();
+
 const template = `
   <!DOCTYPE html>
   <html>
@@ -25,7 +27,10 @@ const template = `
       <link rel="stylesheet" href="file://${node_modules}/nteract-assets/fonts/source-sans-pro/source-sans-pro.css"/>
       <link rel="stylesheet" href="file://${node_modules}/nteract-assets/fonts/source-code-pro/source-code-pro.css"/>
       <link rel="stylesheet" href="file://${node_modules}/nteract-assets/fonts/octicons/octicons.css"/>
+      <link rel="stylesheet" href="file://${BASE_PATH}/static/styles/main.css" />
+      <link rel="stylesheet" href="file://${BASE_PATH}/static/styles/theme-light.css" />
       <script type="text/javascript" src="file://${node_modules}/mathjax-electron/resources/MathJax/MathJax.js?config=electron"></script>
+      <base href="file:///Users/kylek/" />
     </head>
     <body>
       <div id="app">
