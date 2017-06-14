@@ -53,6 +53,9 @@ ipc.on("open-notebook", (event, filename) => {
 
 const electronReady$ = Rx.Observable.fromEvent(app, "ready");
 
+// TODO: Register our protocol here, rendering index.html accordingly
+// See https://github.com/nteract/nteract/pull/1720
+
 const fullAppReady$ = Rx.Observable.zip(electronReady$, prepareEnv).first();
 
 const jupyterConfigDir = path.join(app.getPath("home"), ".jupyter");
@@ -208,10 +211,11 @@ fullAppReady$.subscribe(() => {
             title: "No Kernels Installed",
             buttons: [],
             message: "No kernels are installed on your system.",
-            detail: "No kernels are installed on your system so you will not be " +
-              "able to execute code cells in any language. You can read about " +
-              "installing kernels at " +
-              "https://ipython.readthedocs.io/en/latest/install/kernel_install.html"
+            detail:
+              "No kernels are installed on your system so you will not be " +
+                "able to execute code cells in any language. You can read about " +
+                "installing kernels at " +
+                "https://ipython.readthedocs.io/en/latest/install/kernel_install.html"
           },
           index => {
             if (index === 0) {
@@ -228,11 +232,12 @@ fullAppReady$.subscribe(() => {
           title: "No Kernels Installed",
           buttons: [],
           message: "No kernels are installed on your system.",
-          detail: "No kernels are installed on your system so you will not be " +
-            "able to execute code cells in any language. You can read about " +
-            "installing kernels at " +
-            "https://ipython.readthedocs.io/en/latest/install/kernel_install.html" +
-            `\nFull error: ${err.message}`
+          detail:
+            "No kernels are installed on your system so you will not be " +
+              "able to execute code cells in any language. You can read about " +
+              "installing kernels at " +
+              "https://ipython.readthedocs.io/en/latest/install/kernel_install.html" +
+              `\nFull error: ${err.message}`
         },
         index => {
           if (index === 0) {
