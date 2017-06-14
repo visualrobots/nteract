@@ -3,9 +3,13 @@ import { protocol, BrowserWindow } from "electron";
 const path = require("path");
 const url = require("url");
 
+const fs = require("fs");
+
 const baseAppDirectory = path.resolve(path.join(__dirname, "..", ".."));
 
 const node_modules = path.join(baseAppDirectory, "node_modules");
+
+const mime = require("mime");
 
 console.log("NODE MODULES", node_modules);
 
@@ -83,6 +87,7 @@ protocol.registerStandardSchemes(["nteract"]);
  * NOTE: Protocols have to be registered after the `app` fires the 'ready' event.
  */
 export function registerProtocol() {
+  console.warn("REGISTERING PROTOCOL");
   protocol.registerBufferProtocol(
     "nteract",
     (request, callback) => {
@@ -90,7 +95,7 @@ export function registerProtocol() {
       console.log(request);
 
       const pathname = request.url.substr(SCHEME_PREFIX_LENGTH);
-      console.log(pathname);
+      console.log("pathy", pathname);
       const extension = path.extname(pathname);
 
       if (extension === ".ipynb") {
@@ -103,13 +108,18 @@ export function registerProtocol() {
       }
 
       // Now we pass through to default read.
-      callback({ path: path.normalize(`${__dirname}/${pathname}`) });
+      callback({
+        mimeType: mime.lookup(extension),
+        // TODO: Async yo
+        data: fs.readFileSync(pathname)
+      });
     },
     error => {
       if (error) console.error("Failed to register protocol");
     }
   );
 
+  /*
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 800,
@@ -125,5 +135,5 @@ export function registerProtocol() {
       protocol: "nteract:",
       slashes: true
     })
-  );
+  );*/
 }
