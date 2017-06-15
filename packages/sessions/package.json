@@ -1,0 +1,27 @@
+{
+  "name": "@nteract/sessions",
+  "version": "1.0.0",
+  "description": "Experimenting with server side sessions for notebooks",
+  "main": "lib/index.js",
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "npm run build:clean && npm run build:lib && npm run build:flow",
+    "build:clean": "rimraf lib",
+    "build:flow": "flow-copy-source -v -i '**/__tests__/**' src lib",
+    "build:lib": "babel -d lib src --ignore '**/__tests__/**'",
+    "build:lib:watch": "npm run build:lib -- --watch"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@nteract/commutable": "^1.1.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "flow-copy-source": "^1.1.0",
+    "rimraf": "^2.6.1"
+  },
+  "author": "Kyle Kelley <rgbkrk@gmail.com>",
+  "license": "BSD-3-Clause"
+}
