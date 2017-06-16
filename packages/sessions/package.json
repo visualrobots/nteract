@@ -4,6 +4,7 @@
   "description": "Experimenting with server side sessions for notebooks",
   "main": "lib/index.js",
   "scripts": {
+    "start": "node lib/index.js",
     "prepare": "npm run build",
     "build": "npm run build:clean && npm run build:lib && npm run build:flow",
     "build:clean": "rimraf lib",
@@ -15,7 +16,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@nteract/commutable": "^1.1.4"
+    "@nteract/commutable": "^1.1.4",
+    "@nteract/messaging": "*"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
